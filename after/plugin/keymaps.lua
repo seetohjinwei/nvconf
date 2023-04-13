@@ -17,3 +17,6 @@ vim.cmd [[ autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/ ]]
 map('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 map('n', '<leader>e', "<Cmd>Neotree toggle<CR>", default_opts)
 map('n', '<leader>tm', "<Cmd>ToggleTerm<CR>", default_opts)
+
+vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
+vim.keymap.set("n", "<leader>GS", ':Git ') -- without CR
