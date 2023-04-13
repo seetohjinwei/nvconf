@@ -200,8 +200,6 @@ vim.o.smartcase = false
 vim.o.signcolumn = "yes"
 vim.o.colorcolumn = "120"
 
-vim.cmd [[ colorscheme one_monokai ]]
-
 -- Make line numbers default
 vim.wo.number = true
 
@@ -414,7 +412,7 @@ end
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 --
--- keywords: add lsp add lsp-add add-lsp language
+-- keywords: Mason mason add lsp add lsp-add add-lsp language
 local servers = {
   clangd = {},
   -- gopls = {},
@@ -456,6 +454,14 @@ mason_lspconfig.setup_handlers {
     }
   end,
 }
+
+local null_ls = require("null-ls")
+
+null_ls.setup({
+  sources = {
+    null_ls.builtins.formatting.prettierd,
+  },
+})
 
 -- nvim-cmp setup
 local cmp = require 'cmp'

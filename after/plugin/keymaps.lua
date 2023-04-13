@@ -9,14 +9,20 @@ map('n', '<Leader>l', ':noh<CR>', opts)
 map('n', '<Leader>;', 'mpA;<Esc>`p:delmarks p<CR>', opts)
 map('i', '<Leader>;', '<Esc>mpA;<Esc>`p:delmarks p<CR>a', opts)
 
-vim.cmd [[ highlight ExtraWhitespace ctermbg=darkred guibg=darkred ]]
+vim.cmd [[ autocmd ColorScheme * highlight ExtraWhitespace ctermbg=darkred guibg=darkred ]]
 vim.cmd [[ match ExtraWhitespace /\s\+$/ ]]
 vim.cmd [[ autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/ ]]
+
+vim.cmd [[ colorscheme one_monokai ]]
 
 -- plugins
 map('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 map('n', '<leader>e', "<Cmd>Neotree toggle<CR>", default_opts)
 map('n', '<leader>tm', "<Cmd>ToggleTerm<CR>", default_opts)
 
-vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
-vim.keymap.set("n", "<leader>GS", ':Git ') -- without CR
+map("n", "<leader>gs", vim.cmd.Git)
+map("n", "<leader>GS", ':Git ') -- without CR
+
+map('n', '<leader>ff', "<Cmd>lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>", default_opts) -- format file
+
+map("n", "<leader>gb", '<Cmd>Gitsigns toggle_current_line_blame<CR>') -- toggles in-line Git blame
