@@ -115,9 +115,6 @@ require('lazy').setup({
   { -- Theme inspired by Atom
     'navarasu/onedark.nvim',
     priority = 1000,
-    -- config = function()
-    --   vim.cmd.colorscheme 'onedark'
-    -- end,
   },
 
   { -- Set lualine as statusline
@@ -203,7 +200,7 @@ vim.o.smartcase = false
 vim.o.signcolumn = "yes"
 vim.o.colorcolumn = "120"
 
-vim.cmd [[ colorscheme tokyonight ]]
+vim.cmd [[ colorscheme one_monokai ]]
 
 -- Make line numbers default
 vim.wo.number = true
