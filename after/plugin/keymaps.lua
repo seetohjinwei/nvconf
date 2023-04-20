@@ -28,3 +28,11 @@ map("n", "<leader>GS", ':Git ') -- without CR
 map('n', '<leader>ff', "<Cmd>lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>", default_opts) -- format file
 
 map("n", "<leader>gb", '<Cmd>Gitsigns toggle_current_line_blame<CR>') -- toggles in-line Git blame
+
+-- z=: bring up word suggestions
+-- zg: add to dictionary
+-- zw: remove from dictionary
+-- :set spell
+-- :set nospell
+vim.opt.spell = true
+vim.opt.spellcapcheck = ''
