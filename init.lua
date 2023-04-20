@@ -291,9 +291,41 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
+-- keywords: languages ts syntax highlighting
+-- :TSInstallInfo
 require('nvim-treesitter.configs').setup {
-  -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim', 'comment' },
+  ensure_installed = {
+    -- Web Frontend
+    'html', 'css', 'scss',
+    'tsx', 'typescript', 'javascript',
+    'astro',
+
+    -- Other langauges
+    'python',
+    'sql',
+    'c', 'cpp',
+    'go',
+    'java',
+    'rust',
+    'lua',
+    'ruby',
+    'bash',
+
+    -- Make words look pretty
+    'markdown', 'latex',
+
+    -- Neat comments
+    'comment',
+
+    -- Configs
+    'gitcommit', 'gitignore', 'git_config',
+    'make', 'cmake',
+    'json', 'yaml', 'toml',
+    'dockerfile',
+
+    -- I don't use vimfiles, but it's here just in case
+    'vimdoc', 'vim',
+  },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,

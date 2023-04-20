@@ -5,6 +5,8 @@ map('n', '<Leader>tt', ':vsplit<CR>', opts)
 map('n', '<Leader>ty', ':split<CR>', opts)
 map('n', '<Leader>tw', ':close<CR>', opts)
 map('n', '<Leader>l', ':noh<CR>', opts)
+map('i', '<Leader>c', '<Esc>cc', opts)
+map('i', '<Leader>d', '<Esc>dd', opts)
 
 map('n', '<Leader>;', 'mpA;<Esc>`p:delmarks p<CR>', opts)
 map('i', '<Leader>;', '<Esc>mpA;<Esc>`p:delmarks p<CR>a', opts)
