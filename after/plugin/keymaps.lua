@@ -29,6 +29,11 @@ map('n', '<leader>ff', "<Cmd>lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>",
 
 map("n", "<leader>gb", '<Cmd>Gitsigns toggle_current_line_blame<CR>') -- toggles in-line Git blame
 
+-- My own noted "plugin".
+map('n', '<Leader>qq', '<Cmd>NotedGlobal<CR>', opts)
+map('n', '<Leader>qw', '<Cmd>NotedTodo<CR>', opts)
+map('n', '<Leader>qe', '<Cmd>NotedProject<CR>', opts)
+
 -- z=: bring up word suggestions
 -- zg: add to dictionary
 -- zw: remove from dictionary
