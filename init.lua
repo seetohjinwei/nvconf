@@ -312,7 +312,8 @@ require('nvim-treesitter.configs').setup {
     'bash',
 
     -- Make words look pretty
-    'markdown', 'latex',
+    -- 'markdown', -- using vim-pandoc-syntax for this
+    'latex',
 
     -- Neat comments
     'comment',
@@ -542,3 +543,15 @@ cmp.setup {
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+-- for vim-pandoc
+-- TODO: code blocks are slightly broken (only the first code block is correct...)
+vim.cmd([[
+  augroup pandoc_syntax
+    au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+  augroup END
+]])
+
+vim.cmd([[
+  let g:markdown_fenced_languages = ['coffee', 'css', 'erb=eruby', 'javascript', 'js=javascript', 'json=javascript', 'ruby', 'sass', 'xml', 'html']
+]])
