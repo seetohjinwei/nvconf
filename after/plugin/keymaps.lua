@@ -17,6 +17,19 @@ vim.cmd [[ autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/ ]]
 
 vim.cmd [[ colorscheme one_monokai ]]
 
+-- toggle colorscheme
+function _toggleColorscheme()
+  if vim.g.colors_name == 'one_monokai' then
+    print("Switching to light theme...")
+    vim.cmd [[ colorscheme github_light_colorblind ]]
+  else
+    print("Switching to dark theme...")
+    vim.cmd [[ colorscheme one_monokai ]]
+  end
+end
+vim.api.nvim_create_user_command("ToggleColorscheme", _toggleColorscheme, {})
+map('n', '<Leader>00', '<Cmd>ToggleColorscheme<CR>', opts)
+
 -- plugins
 map('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 map('n', '<leader>e', "<Cmd>Neotree toggle<CR>", default_opts)
