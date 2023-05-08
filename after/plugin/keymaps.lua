@@ -22,7 +22,14 @@ map('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [
 map('n', '<leader>e', "<Cmd>Neotree toggle<CR>", default_opts)
 map('n', '<leader>tm', "<Cmd>ToggleTerm<CR>", default_opts)
 
+-- toggle fugitive
 map("n", "<leader>gs", vim.cmd.Git)
+vim.cmd([[
+  augroup FugitiveToggle
+    autocmd!
+    autocmd Filetype fugitive nnoremap <buffer> <silent> <leader>gs :close<CR>
+  augroup END
+]])
 map("n", "<leader>GS", ':Git ') -- without CR
 
 map('n', '<leader>ff', "<Cmd>lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>", default_opts) -- format file
@@ -33,6 +40,11 @@ map("n", "<leader>gb", '<Cmd>Gitsigns toggle_current_line_blame<CR>') -- toggles
 map('n', '<Leader>qq', '<Cmd>NotedGlobal<CR>', opts)
 map('n', '<Leader>qw', '<Cmd>NotedTodo<CR>', opts)
 map('n', '<Leader>qe', '<Cmd>NotedProject<CR>', opts)
+
+-- treesj
+map('n', '<Leader>sj', '<Cmd>TSJToggle<CR>', opts)
+map('n', '<Leader>sk', '<Cmd>TSJSplit<CR>', opts)
+map('n', '<Leader>sl', '<Cmd>TSJJoin<CR>', opts)
 
 -- z=: bring up word suggestions
 -- zg: add to dictionary

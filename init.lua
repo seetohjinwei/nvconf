@@ -141,7 +141,13 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  {
+    'numToStr/Comment.nvim',
+    dependencies = {
+      'JoosepAlviste/nvim-ts-context-commentstring',
+    },
+    opts = { },
+  },
 
   -- Fuzzy Finder (files, lsp, etc)
   { 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } },
@@ -163,6 +169,7 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
+      'JoosepAlviste/nvim-ts-context-commentstring',
     },
     config = function()
       pcall(require('nvim-treesitter.install').update { with_sync = true })
@@ -234,6 +241,9 @@ vim.o.completeopt = 'menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
+
+-- scroll offset
+vim.o.scrolloff = 4
 
 -- [[ Basic Keymaps ]]
 
@@ -386,6 +396,13 @@ require('nvim-treesitter.configs').setup {
       },
     },
   },
+  context_commentstring = {
+    enable = true,
+    enable_autocmd = false,
+  },
+  autotag = {
+    enable = true,
+  },
 }
 
 -- Diagnostic keymaps
@@ -452,6 +469,7 @@ local servers = {
   pyright = {},
   -- rust_analyzer = {},
   tsserver = {},
+  cssls = {},
 
   -- lua_ls = {
   --   Lua = {
@@ -489,10 +507,15 @@ mason_lspconfig.setup_handlers {
 }
 
 local null_ls = require("null-ls")
-
 null_ls.setup({
   sources = {
     null_ls.builtins.formatting.prettierd,
+  },
+  on_attach = on_attach,
+})
+null_ls.builtins.formatting.prettierd.with({
+  env = {
+    string.format('PRETTIERD_DEFAULT_CONFIG=%s', vim.fn.expand(vim.fn.stdpath("config") .. "/.prettierrc.json")),
   },
 })
 
@@ -541,14 +564,21 @@ cmp.setup {
   },
 }
 
+require('Comment').setup {
+  pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+}
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 
 -- for vim-pandoc
 -- TODO: code blocks are slightly broken (only the first code block is correct...)
+vim.o.conceallevel = 0
 vim.cmd([[
   augroup pandoc_syntax
-    au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+    au! BufNewFile,BufFilePre,BufRead *.md
+      \ set filetype=markdown.pandoc |
+      \ setlocal conceallevel=2
   augroup END
 ]])
 
