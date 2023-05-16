@@ -507,15 +507,24 @@ mason_lspconfig.setup_handlers {
 }
 
 local null_ls = require("null-ls")
-null_ls.setup({
-  sources = {
-    null_ls.builtins.formatting.prettierd,
+local formatting = null_ls.builtins.formatting
+local diagnostics = null_ls.builtins.diagnostics
+null_ls.setup()
+
+local mason_null_ls = require("mason-null-ls")
+mason_null_ls.setup({
+  ensure_installed = {
+    "prettier",
+    "black",
   },
-  on_attach = on_attach,
-})
-null_ls.builtins.formatting.prettierd.with({
-  env = {
-    string.format('PRETTIERD_DEFAULT_CONFIG=%s', vim.fn.expand(vim.fn.stdpath("config") .. "/.prettierrc.json")),
+  handlers = {
+    function() end, -- disable automatic setup of all null-ls sources
+    prettier = function(source_name, methods)
+      null_ls.register(formatting.prettier.with({ extra_args = { "--trailing-comma all", "--print-width 120" } }))
+    end,
+    black = function(source_name, methods)
+      null_ls.register(formatting.black.with({ extra_args = { "--fast" } }))
+    end,
   },
 })
 
