@@ -38,6 +38,7 @@ This config uses `;` as leader key.
 - `nvim-autopairs` - autocomplete pairs (quotes, brackets)
 - `Comment.nvim` - toggle commenting of a line / selection
 - `lualine.nvim` - status line
+    - `nvim-navic.nvim` - current code context, i.e. `getServerSideProps > data.forEach callback`
 - `indent-blankline.nvim` - indentation guide
 - `nvim-surround` - I'll eventually learn this
 

@@ -127,6 +127,29 @@ require('lazy').setup({
         component_separators = '|',
         section_separators = '',
       },
+      sections = {
+        lualine_c = {
+          "navic",
+
+          -- Component specific options
+          color_correction = nil, -- Can be nil, "static" or "dynamic". This option is useful only when you have highlights enabled.
+          -- Many colorschemes don't define same backgroud for nvim-navic as their lualine statusline backgroud.
+          -- Setting it to "static" will perform a adjustment once when the component is being setup. This should
+          --   be enough when the lualine section isn't changing colors based on the mode.
+          -- Setting it to "dynamic" will keep updating the highlights according to the current modes colors for
+          --   the current section.
+
+          navic_opts = nil  -- lua table with same format as setup's option. All options except "lsp" options take effect when set here.
+        }
+      },
+      -- alternatively, use winbar (top status bar) for navic
+      -- winbar = {
+      --   lualine_c = {
+      --     "navic",
+      --     color_correction = nil,
+      --     navic_opts = nil
+      --   }
+      -- },
     },
   },
 
@@ -411,9 +434,11 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Go to next diagnos
 vim.keymap.set('n', '<leader>p', vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 
+local navic = require("nvim-navic")
+
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   -- NOTE: Remember that lua is a real programming language, and as such it is possible
   -- to define small helper and utility functions so you don't have to repeat yourself
   -- many times.
@@ -424,6 +449,8 @@ local on_attach = function(_, bufnr)
     if desc then
       desc = 'LSP: ' .. desc
     end
+
+    navic.attach(client, bufnr)
 
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
@@ -517,6 +544,7 @@ mason_null_ls.setup({
     "prettier",
     "black",
   },
+  automatic_installation = false,
   handlers = {
     function() end, -- disable automatic setup of all null-ls sources
     prettier = function(source_name, methods)
