@@ -29,17 +29,27 @@ This config uses `;` as leader key.
 - `lazy.nvim` - `:Lazy` - plugin manager
 - `mason.nvim` - `:Mason` - lsp (& related) manager
     - `mason-lspconfig.nvim` - lsp
+- `mason-null-ls` - formatter manager
     - `null-ls.nvim` - formatter
-- `one_monokai.nvim` - colorscheme of choice
+- colorschemes (use `<leader>00` to toggle)
+    - `one_monokai.nvim` - dark colorscheme
+    - `github_nvim_theme` - light colorscheme
 - `vim-fugitive` - awesome Git client
 - `gitsigns.nvim` - more neat Git stuff (incl. in-line blame)
-- `toggleterm.nvim` - much better terminal
 - `neo-tree.nvim` - file tree
 - `nvim-autopairs` - autocomplete pairs (quotes, brackets)
 - `Comment.nvim` - toggle commenting of a line / selection
 - `lualine.nvim` - status line
     - `nvim-navic.nvim` - current code context, i.e. `getServerSideProps > data.forEach callback`
+- markdown plugins
+    - `vim-markdown`
+    - `vim-pandoc-syntax`
+    - `vim-json`
+    - `noted.nvim` - my own "plugin" for quick notes / todos
+- `vim-tmux-navigator` - for integration with tmux
 - `indent-blankline.nvim` - indentation guide
 - `nvim-surround` - I'll eventually learn this
+- `toggleterm.nvim` - much better terminal
+    - installed, but using tmux to spawn terminal externally instead
 
 Forked from [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim).
