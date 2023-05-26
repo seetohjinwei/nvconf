@@ -434,6 +434,9 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Go to next diagnos
 vim.keymap.set('n', '<leader>p', vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 
+-- tmux
+-- vim.keymap.set('n', 'CTRL', vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
+
 local navic = require("nvim-navic")
 
 -- LSP settings.

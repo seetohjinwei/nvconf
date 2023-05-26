@@ -42,12 +42,13 @@ This config uses `;` as leader key.
 - `lualine.nvim` - status line
     - `nvim-navic.nvim` - current code context, i.e. `getServerSideProps > data.forEach callback`
 - `symbols-outline.nvim` - symbol tree
+- `trouble.nvim` - symbol tree
 - markdown plugins
     - `vim-markdown`
     - `vim-pandoc-syntax`
     - `vim-json`
     - `noted.nvim` - my own "plugin" for quick notes / todos
-- `vim-tmux-navigator` - for integration with tmux
+- `tmux.nvim` - for integration with tmux
 - `indent-blankline.nvim` - indentation guide
 - `nvim-surround` - I'll eventually learn this
 - `toggleterm.nvim` - much better terminal

@@ -34,8 +34,9 @@ require("symbols-outline").setup()
 
 -- plugins
 map('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
-map('n', '<leader>e', "<Cmd>Neotree toggle<CR>", default_opts)
-map('n', '<leader>w', "<Cmd>SymbolsOutline<CR>", default_opts)
+map('n', '<leader>ee', "<Cmd>Neotree toggle<CR>", default_opts)
+map('n', '<leader>ew', "<Cmd>SymbolsOutline<CR>", default_opts)
+map('n', '<leader>er', "<Cmd>TroubleToggle<CR>", default_opts)
 map('n', '<leader>tm', "<Cmd>ToggleTerm<CR>", default_opts)
 
 -- toggle fugitive
