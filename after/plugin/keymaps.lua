@@ -30,9 +30,12 @@ end
 vim.api.nvim_create_user_command("ToggleColorscheme", _toggleColorscheme, {})
 map('n', '<Leader>00', '<Cmd>ToggleColorscheme<CR>', opts)
 
+require("symbols-outline").setup()
+
 -- plugins
 map('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 map('n', '<leader>e', "<Cmd>Neotree toggle<CR>", default_opts)
+map('n', '<leader>w', "<Cmd>SymbolsOutline<CR>", default_opts)
 map('n', '<leader>tm', "<Cmd>ToggleTerm<CR>", default_opts)
 
 -- toggle fugitive

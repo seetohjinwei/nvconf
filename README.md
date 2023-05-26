@@ -41,6 +41,7 @@ This config uses `;` as leader key.
 - `Comment.nvim` - toggle commenting of a line / selection
 - `lualine.nvim` - status line
     - `nvim-navic.nvim` - current code context, i.e. `getServerSideProps > data.forEach callback`
+- `symbols-outline.nvim` - symbol tree
 - markdown plugins
     - `vim-markdown`
     - `vim-pandoc-syntax`
