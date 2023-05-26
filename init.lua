@@ -129,7 +129,8 @@ require('lazy').setup({
       },
       sections = {
         lualine_c = {
-          "navic",
+          "filename",
+          "navic", -- navic goes after filename
 
           -- Component specific options
           color_correction = nil, -- Can be nil, "static" or "dynamic". This option is useful only when you have highlights enabled.
