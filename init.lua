@@ -1,43 +1,6 @@
---[[
+local map = vim.keymap.set
+local default_opts = { noremap = true, silent = true }
 
-=====================================================================
-==================== READ THIS BEFORE CONTINUING ====================
-=====================================================================
-
-Kickstart.nvim is *not* a distribution.
-
-Kickstart.nvim is a template for your own configuration.
-  The goal is that you can read every line of code, top-to-bottom, and understand
-  what your configuration is doing.
-
-  Once you've done that, you should start exploring, configuring and tinkering to
-  explore Neovim!
-
-  If you don't know anything about Lua, I recommend taking some time to read through
-  a guide. One possible example:
-  - https://learnxinyminutes.com/docs/lua/
-
-  And then you can explore or search through `:help lua-guide`
-
-
-Kickstart Guide:
-
-I have left several `:help X` comments throughout the init.lua
-You should run that command and read that help section for more information.
-
-In addition, I have some `NOTE:` items throughout the file.
-These are for you, the reader to help understand what is happening. Feel free to delete
-them once you know what you're doing, but they should serve as a guide for when you
-are first encountering a few different constructs in your nvim config.
-
-I hope you enjoy your Neovim journey,
-- TJ
-
-P.S. You can delete this when you're done too. It's your config now :)
---]]
-
--- Set <space> as the leader key
--- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ';'
 vim.g.maplocalleader = ';'
@@ -67,8 +30,30 @@ require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
 
   -- Git related plugins
-  'tpope/vim-fugitive',
-  'tpope/vim-rhubarb',
+  {
+    'tpope/vim-fugitive',
+    lazy = false, -- doesn't seem to work properly when lazy-loaded
+    keys = {
+      { "<leader>gs", "<Cmd>Git<CR>", default_opts, desc = "Fugitive Toggle" },
+      { "<leader>GS", ':Git ', default_opts, desc = ":Git" },
+    },
+
+    -- <leader>gs closes Fugitive window if in it
+    config = function()
+      vim.cmd([[
+        augroup FugitiveToggle
+        autocmd!
+        autocmd Filetype fugitive nnoremap <buffer> <silent> <leader>gs :close<CR>
+        augroup END
+      ]])
+    end,
+  },
+  {
+    'tpope/vim-rhubarb',
+    dependencies = {
+      'tpope/vim-fugitive',
+    },
+  },
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
@@ -98,6 +83,7 @@ require('lazy').setup({
 
   -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim', opts = {} },
+
   { -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
@@ -109,6 +95,10 @@ require('lazy').setup({
         topdelete = { text = '‾' },
         changedelete = { text = '~' },
       },
+    },
+    lazy = true,
+    keys = {
+      { "<leader>gb", "<Cmd>Gitsigns toggle_current_line_blame<CR>", default_opts, desc = "Gitsigns Toggle" },
     },
   },
 
@@ -166,6 +156,11 @@ require('lazy').setup({
       'JoosepAlviste/nvim-ts-context-commentstring',
     },
     opts = { },
+    config = function()
+      require('Comment').setup {
+        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+      }
+    end,
   },
 
   -- Fuzzy Finder (files, lsp, etc)
@@ -195,7 +190,15 @@ require('lazy').setup({
     end,
   },
 
-  { "rebelot/kanagawa.nvim" },
+  {
+    "rebelot/kanagawa.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      -- load colorscheme here
+      vim.cmd [[ colorscheme kanagawa-wave ]]
+    end,
+  },
 
   {
     "windwp/nvim-autopairs",
@@ -212,7 +215,12 @@ require('lazy').setup({
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
     },
+    keys = {
+      { "<leader>ee", "<Cmd>Neotree toggle<CR>", default_opts, desc = "NeoTree" },
+    },
     config = function ()
+      vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+
       require('neo-tree').setup {}
     end,
   },
@@ -220,6 +228,7 @@ require('lazy').setup({
   {
     "projekt0n/github-nvim-theme",
     version = 'v0.0.7',
+    lazy = true,
   },
 
   {
@@ -240,19 +249,21 @@ require('lazy').setup({
 
   {
     "SmiteshP/nvim-navic",
-    requires = "neovim/nvim-lspconfig",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+    },
   },
 
-  {
-    "kylechui/nvim-surround",
-    version = "*", -- Use for stability; omit to use `main` branch for the latest features
-    event = "VeryLazy",
-    config = function()
-      require("nvim-surround").setup({
-        -- Configuration here, or leave empty to use defaults
-      })
-    end
-  },
+  -- {
+  --   "kylechui/nvim-surround",
+  --   version = "*", -- Use for stability; omit to use `main` branch for the latest features
+  --   event = "VeryLazy",
+  --   config = function()
+  --     require("nvim-surround").setup({
+  --       -- Configuration here, or leave empty to use defaults
+  --     })
+  --   end
+  -- },
 
   {
     "windwp/nvim-ts-autotag",
@@ -260,13 +271,21 @@ require('lazy').setup({
 
   {
     "cpea2506/one_monokai.nvim",
+    lazy = true,
     config = function()
-      require("one_monokai").setup {}
+      -- require("one_monokai").setup {}
     end,
   },
 
   {
     "simrat39/symbols-outline.nvim",
+    lazy = true,
+    keys = {
+      { "<leader>ew", "<Cmd>SymbolsOutline<CR>", default_opts, desc = "SymbolsOutline" },
+    },
+    config = function()
+      require("symbols-outline").setup()
+    end,
   },
 
   {
@@ -302,6 +321,10 @@ require('lazy').setup({
 
   {
     "akinsho/toggleterm.nvim",
+    lazy = true,
+    keys = {
+      { "<leader>tm", "<Cmd>ToggleTerm<CR>", default_opts, desc = "ToggleTerm" },
+    },
     config = function()
       require("toggleterm").setup {}
     end,
@@ -309,15 +332,22 @@ require('lazy').setup({
 
   {
     "folke/tokyonight.nvim",
+    lazy = true,
     config = function()
-      require("tokyonight").setup {}
+      -- require("tokyonight").setup {}
     end,
   },
 
   -- neovim treesitter splitjoin
   {
     'Wansmer/treesj',
+    lazy = true,
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    keys = {
+      { "<leader>sj", "<Cmd>TSJToggle<CR>", default_opts, desc = "TSJToggle" },
+      { "<leader>sk", "<Cmd>TSJSplit<CR>", default_opts, desc = "TSJSplit" },
+      { "<leader>sl", "<Cmd>TSJJoin<CR>", default_opts, desc = "TSJJoin" },
+    },
     config = function()
       require('treesj').setup({
         use_default_keymaps = false,
@@ -327,7 +357,11 @@ require('lazy').setup({
 
   {
     "folke/trouble.nvim",
+    lazy = true,
     dependencies = { "nvim-tree/nvim-web-devicons" },
+    keys = {
+      { "<leader>er", "<Cmd>TroubleToggle<CR>", default_opts, desc = "Trouble Toggle" },
+    },
     opts = {
 
     },
@@ -335,6 +369,9 @@ require('lazy').setup({
 
   {
     "elzr/vim-json",
+    config = function()
+      vim.cmd([[ let g:vim_json_syntax_conceal = 0 ]])
+    end,
   },
 
   {
@@ -342,10 +379,49 @@ require('lazy').setup({
     dependencies = {
       "godlygeek/tabular",
     },
+    config = function()
+      -- reference: https://jdhao.github.io/2019/01/15/markdown_edit_preview_nvim/
+
+      -- disable header folding
+      vim.cmd([[ let g:vim_markdown_folding_disabled = 1 ]])
+
+      -- do not use conceal feature, the implementation is not so good
+      vim.cmd([[ let g:vim_markdown_conceal = 0 ]])
+
+      -- disable math tex conceal feature
+      vim.cmd([[ let g:tex_conceal = "" ]])
+      vim.cmd([[ let g:vim_markdown_math = 1 ]])
+
+      -- support front matter of various format
+      vim.cmd([[ let g:vim_markdown_frontmatter = 1 ]])
+      vim.cmd([[ let g:vim_markdown_toml_frontmatter = 1 ]])
+      vim.cmd([[ let g:vim_markdown_json_frontmatter = 1 ]])
+
+      -- pandoc markdown code blocks
+      vim.cmd([[
+        let g:pandoc#syntax#codeblocks#embeds#langs = [ "bash", "c", "cpp", "html", "java", "javascript", "py=python", "python", "rust", "shell=sh", "sh", "typescript" ]
+        let g:pandoc#syntax#conceal#conceal_code_blocks=1
+      ]])
+    end,
   },
 
   {
     "vim-pandoc/vim-pandoc-syntax",
+    config = function()
+      -- TODO: code blocks are slightly broken (only the first code block is correct...)
+      vim.o.conceallevel = 0
+      vim.cmd([[
+        augroup pandoc_syntax
+          au! BufNewFile,BufFilePre,BufRead *.md
+            \ set filetype=markdown.pandoc |
+            \ setlocal conceallevel=2
+        augroup END
+      ]])
+
+      vim.cmd([[
+        let g:markdown_fenced_languages = ['coffee', 'css', 'erb=eruby', 'javascript', 'js=javascript', 'json=javascript', 'ruby', 'sass', 'xml', 'html']
+      ]])
+    end,
   },
 
   -- putting everything directly in this table instead
@@ -414,9 +490,6 @@ vim.opt.spellcapcheck = ''
 
 -- [[ Basic Keymaps ]]
 
-local map = vim.keymap.set
-local default_opts = { noremap = true, silent = true }
-
 -- my mappings
 
 map('n', '<Leader>tt', ':vsplit<CR>', opts)
@@ -429,19 +502,12 @@ map('i', '<Leader>d', '<Esc>dd', opts)
 map('n', '<Leader>;', 'mpA;<Esc>`p:delmarks p<CR>', opts)
 map('i', '<Leader>;', '<Esc>mpA;<Esc>`p:delmarks p<CR>a', opts)
 
--- for plugins
 map('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
-map('n', '<leader>ee', "<Cmd>Neotree toggle<CR>", default_opts)
-map('n', '<leader>ew', "<Cmd>SymbolsOutline<CR>", default_opts)
-map('n', '<leader>er', "<Cmd>TroubleToggle<CR>", default_opts)
-map('n', '<leader>tm', "<Cmd>ToggleTerm<CR>", default_opts)
 
 -- colorscheme
 vim.cmd [[ autocmd ColorScheme * highlight ExtraWhitespace ctermbg=darkred guibg=darkred ]]
 vim.cmd [[ match ExtraWhitespace /\s\+$/ ]]
 vim.cmd [[ autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/ ]]
-
-vim.cmd [[ colorscheme kanagawa ]]
 
 -- toggle colorscheme
 function _toggleColorscheme()
@@ -455,31 +521,14 @@ function _toggleColorscheme()
 end
 vim.api.nvim_create_user_command("ToggleColorscheme", _toggleColorscheme, {})
 map('n', '<Leader>00', '<Cmd>ToggleColorscheme<CR>', opts)
-
-
--- toggle fugitive
-map("n", "<leader>gs", vim.cmd.Git)
-vim.cmd([[
-  augroup FugitiveToggle
-    autocmd!
-    autocmd Filetype fugitive nnoremap <buffer> <silent> <leader>gs :close<CR>
-  augroup END
-]])
-map("n", "<leader>GS", ':Git ') -- without CR
+map('n', '<leader>99', "<Cmd>Telescope colorscheme<CR>", { desc = 'Colorscheme with preview' })
 
 map('n', '<leader>ff', "<Cmd>lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>", default_opts) -- format file
-
-map("n", "<leader>gb", '<Cmd>Gitsigns toggle_current_line_blame<CR>') -- toggles in-line Git blame
 
 -- My own noted "plugin".
 map('n', '<Leader>qq', '<Cmd>NotedGlobal<CR>', opts)
 map('n', '<Leader>qw', '<Cmd>NotedTodo<CR>', opts)
 map('n', '<Leader>qe', '<Cmd>NotedProject<CR>', opts)
-
--- treesj
-map('n', '<Leader>sj', '<Cmd>TSJToggle<CR>', opts)
-map('n', '<Leader>sk', '<Cmd>TSJSplit<CR>', opts)
-map('n', '<Leader>sl', '<Cmd>TSJJoin<CR>', opts)
 
 -- Keymaps for better default experience
 map({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
@@ -517,13 +566,11 @@ require('telescope').setup {
   },
 }
 
-map('n', '<leader>99', "<Cmd>Telescope colorscheme<CR>", { desc = 'Colorscheme with preview' })
-
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
 
 -- See `:help telescope.builtin`
-map('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
+map('n', '<leader>/', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 map('n', '<leader>sd', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
 map('n', '<leader>ss', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
@@ -691,11 +738,11 @@ local on_attach = function(client, bufnr)
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-  nmap('<leader>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, '[W]orkspace [L]ist Folders')
+  -- nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
+  -- nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+  -- nmap('<leader>wl', function()
+  --   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  -- end, '[W]orkspace [L]ist Folders')
 
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
@@ -820,57 +867,3 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
-
-require('Comment').setup {
-  pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
-}
-
--- Neotree
-vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
-
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
-
--- vim-json
-vim.cmd([[ let g:vim_json_syntax_conceal = 0 ]])
-
--- vim-markdown
--- reference: https://jdhao.github.io/2019/01/15/markdown_edit_preview_nvim/
-
--- disable header folding
-vim.cmd([[ let g:vim_markdown_folding_disabled = 1 ]])
-
--- do not use conceal feature, the implementation is not so good
-vim.cmd([[ let g:vim_markdown_conceal = 0 ]])
-
--- disable math tex conceal feature
-vim.cmd([[ let g:tex_conceal = "" ]])
-vim.cmd([[ let g:vim_markdown_math = 1 ]])
-
--- support front matter of various format
-vim.cmd([[ let g:vim_markdown_frontmatter = 1 ]])
-vim.cmd([[ let g:vim_markdown_toml_frontmatter = 1 ]])
-vim.cmd([[ let g:vim_markdown_json_frontmatter = 1 ]])
-
--- pandoc markdown code blocks
-vim.cmd([[
-  let g:pandoc#syntax#codeblocks#embeds#langs = [ "bash", "c", "cpp", "html", "java", "javascript", "py=python", "python", "rust", "shell=sh", "sh", "typescript" ]
-  let g:pandoc#syntax#conceal#conceal_code_blocks=1
-]])
-
--- for vim-pandoc
--- TODO: code blocks are slightly broken (only the first code block is correct...)
-vim.o.conceallevel = 0
-vim.cmd([[
-  augroup pandoc_syntax
-    au! BufNewFile,BufFilePre,BufRead *.md
-      \ set filetype=markdown.pandoc |
-      \ setlocal conceallevel=2
-  augroup END
-]])
-
-vim.cmd([[
-  let g:markdown_fenced_languages = ['coffee', 'css', 'erb=eruby', 'javascript', 'js=javascript', 'json=javascript', 'ruby', 'sass', 'xml', 'html']
-]])
-
-require("symbols-outline").setup()
