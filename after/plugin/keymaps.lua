@@ -15,16 +15,16 @@ vim.cmd [[ autocmd ColorScheme * highlight ExtraWhitespace ctermbg=darkred guibg
 vim.cmd [[ match ExtraWhitespace /\s\+$/ ]]
 vim.cmd [[ autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/ ]]
 
-vim.cmd [[ colorscheme one_monokai ]]
+vim.cmd [[ colorscheme kanagawa ]]
 
 -- toggle colorscheme
 function _toggleColorscheme()
-  if vim.g.colors_name == 'one_monokai' then
+  if vim.g.colors_name == 'kanagawa' then
     print("Switching to light theme...")
     vim.cmd [[ colorscheme github_light_colorblind ]]
   else
     print("Switching to dark theme...")
-    vim.cmd [[ colorscheme one_monokai ]]
+    vim.cmd [[ colorscheme kanagawa ]]
   end
 end
 vim.api.nvim_create_user_command("ToggleColorscheme", _toggleColorscheme, {})

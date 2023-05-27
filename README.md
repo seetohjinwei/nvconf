@@ -32,7 +32,7 @@ This config uses `;` as leader key.
 - `mason-null-ls` - formatter manager
     - `null-ls.nvim` - formatter
 - colorschemes (use `<leader>00` to toggle)
-    - `one_monokai.nvim` - dark colorscheme
+    - `kanagawa` - dark colorscheme
     - `github_nvim_theme` - light colorscheme
 - `vim-fugitive` - awesome Git client
 - `gitsigns.nvim` - more neat Git stuff (incl. in-line blame)

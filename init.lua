@@ -112,10 +112,10 @@ require('lazy').setup({
     },
   },
 
-  { -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
-    priority = 1000,
-  },
+  -- { -- Theme inspired by Atom
+  --   'navarasu/onedark.nvim',
+  --   priority = 1000,
+  -- },
 
   { -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
@@ -214,6 +214,9 @@ require('lazy').setup({
   --
   --    An additional note is that if you only copied in the `init.lua`, you can just comment this line
   --    to get rid of the warning telling you that there are not plugins in `lua/custom/plugins/`.
+
+  -- { "catppuccin/nvim", name = "catppuccin" },
+  { "rebelot/kanagawa.nvim" },
   { import = 'custom.plugins' },
 }, {})
 
@@ -301,7 +304,14 @@ require('telescope').setup {
       },
     },
   },
+  pickers = {
+    colorscheme = {
+      enable_preview = true,
+    },
+  },
 }
+
+vim.keymap.set('n', '<leader>99', "<Cmd>Telescope colorscheme<CR>", { desc = 'Colorscheme with preview' })
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
