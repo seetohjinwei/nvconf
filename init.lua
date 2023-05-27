@@ -401,18 +401,92 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
+-- z=: bring up word suggestions
+-- zg: add to dictionary
+-- zw: remove from dictionary
+-- :set spell
+-- :set nospell
+vim.opt.spell = true
+vim.opt.spellcapcheck = ''
+
 -- scroll offset (this gets annoying)
 -- vim.o.scrolloff = 4
 
 -- [[ Basic Keymaps ]]
 
+local map = vim.keymap.set
+local default_opts = { noremap = true, silent = true }
+
+-- my mappings
+
+map('n', '<Leader>tt', ':vsplit<CR>', opts)
+map('n', '<Leader>ty', ':split<CR>', opts)
+map('n', '<Leader>tw', ':close<CR>', opts)
+map('n', '<Leader>l', ':noh<CR>', opts)
+map('i', '<Leader>c', '<Esc>cc', opts)
+map('i', '<Leader>d', '<Esc>dd', opts)
+
+map('n', '<Leader>;', 'mpA;<Esc>`p:delmarks p<CR>', opts)
+map('i', '<Leader>;', '<Esc>mpA;<Esc>`p:delmarks p<CR>a', opts)
+
+-- for plugins
+map('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
+map('n', '<leader>ee', "<Cmd>Neotree toggle<CR>", default_opts)
+map('n', '<leader>ew', "<Cmd>SymbolsOutline<CR>", default_opts)
+map('n', '<leader>er', "<Cmd>TroubleToggle<CR>", default_opts)
+map('n', '<leader>tm', "<Cmd>ToggleTerm<CR>", default_opts)
+
+-- colorscheme
+vim.cmd [[ autocmd ColorScheme * highlight ExtraWhitespace ctermbg=darkred guibg=darkred ]]
+vim.cmd [[ match ExtraWhitespace /\s\+$/ ]]
+vim.cmd [[ autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/ ]]
+
+vim.cmd [[ colorscheme kanagawa ]]
+
+-- toggle colorscheme
+function _toggleColorscheme()
+  if vim.g.colors_name == 'kanagawa' then
+    print("Switching to light theme...")
+    vim.cmd [[ colorscheme github_light_colorblind ]]
+  else
+    print("Switching to dark theme...")
+    vim.cmd [[ colorscheme kanagawa ]]
+  end
+end
+vim.api.nvim_create_user_command("ToggleColorscheme", _toggleColorscheme, {})
+map('n', '<Leader>00', '<Cmd>ToggleColorscheme<CR>', opts)
+
+
+-- toggle fugitive
+map("n", "<leader>gs", vim.cmd.Git)
+vim.cmd([[
+  augroup FugitiveToggle
+    autocmd!
+    autocmd Filetype fugitive nnoremap <buffer> <silent> <leader>gs :close<CR>
+  augroup END
+]])
+map("n", "<leader>GS", ':Git ') -- without CR
+
+map('n', '<leader>ff', "<Cmd>lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>", default_opts) -- format file
+
+map("n", "<leader>gb", '<Cmd>Gitsigns toggle_current_line_blame<CR>') -- toggles in-line Git blame
+
+-- My own noted "plugin".
+map('n', '<Leader>qq', '<Cmd>NotedGlobal<CR>', opts)
+map('n', '<Leader>qw', '<Cmd>NotedTodo<CR>', opts)
+map('n', '<Leader>qe', '<Cmd>NotedProject<CR>', opts)
+
+-- treesj
+map('n', '<Leader>sj', '<Cmd>TSJToggle<CR>', opts)
+map('n', '<Leader>sk', '<Cmd>TSJSplit<CR>', opts)
+map('n', '<Leader>sl', '<Cmd>TSJJoin<CR>', opts)
+
 -- Keymaps for better default experience
--- See `:help vim.keymap.set()`
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+map({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -443,15 +517,15 @@ require('telescope').setup {
   },
 }
 
-vim.keymap.set('n', '<leader>99', "<Cmd>Telescope colorscheme<CR>", { desc = 'Colorscheme with preview' })
+map('n', '<leader>99', "<Cmd>Telescope colorscheme<CR>", { desc = 'Colorscheme with preview' })
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
 
 -- See `:help telescope.builtin`
-vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
-vim.keymap.set('n', '<leader>sd', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
-vim.keymap.set('n', '<leader>ss', function()
+map('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
+map('n', '<leader>sd', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
+map('n', '<leader>ss', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
     winblend = 10,
@@ -459,11 +533,11 @@ vim.keymap.set('n', '<leader>ss', function()
   })
 end, { desc = '[/] Fuzzily search in current buffer' })
 
-vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
--- vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+map('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
+map('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
+map('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
+map('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+-- map('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -572,13 +646,13 @@ require('nvim-treesitter.configs').setup {
 }
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
-vim.keymap.set('n', '<leader>p', vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
+map('n', 'g[', vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" });
+map('n', 'g]', vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
+-- map('n', '<leader>p', vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
+-- map('n', '<leader>q', vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 
 -- tmux
--- vim.keymap.set('n', 'CTRL', vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
+-- map('n', 'CTRL', vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 
 local navic = require("nvim-navic")
 
@@ -598,7 +672,7 @@ local on_attach = function(client, bufnr)
 
     navic.attach(client, bufnr)
 
-    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+    map('n', keys, func, { buffer = bufnr, desc = desc })
   end
 
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
@@ -798,3 +872,5 @@ vim.cmd([[
 vim.cmd([[
   let g:markdown_fenced_languages = ['coffee', 'css', 'erb=eruby', 'javascript', 'js=javascript', 'json=javascript', 'ruby', 'sass', 'xml', 'html']
 ]])
+
+require("symbols-outline").setup()
