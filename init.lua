@@ -112,11 +112,6 @@ require('lazy').setup({
     },
   },
 
-  -- { -- Theme inspired by Atom
-  --   'navarasu/onedark.nvim',
-  --   priority = 1000,
-  -- },
-
   { -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
@@ -200,24 +195,161 @@ require('lazy').setup({
     end,
   },
 
-  -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
-  --       These are some example plugins that I've included in the kickstart repository.
-  --       Uncomment any of the lines below to enable them.
-  -- require 'kickstart.plugins.autoformat',
-  -- require 'kickstart.plugins.debug',
-
-  -- NOTE: The import below automatically adds your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
-  --    up-to-date with whatever is in the kickstart repo.
-  --
-  --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-  --
-  --    An additional note is that if you only copied in the `init.lua`, you can just comment this line
-  --    to get rid of the warning telling you that there are not plugins in `lua/custom/plugins/`.
-
-  -- { "catppuccin/nvim", name = "catppuccin" },
   { "rebelot/kanagawa.nvim" },
-  { import = 'custom.plugins' },
+
+  {
+    "windwp/nvim-autopairs",
+    config = function()
+      require("nvim-autopairs").setup {}
+    end,
+  },
+
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    version = "*",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+    },
+    config = function ()
+      require('neo-tree').setup {}
+    end,
+  },
+
+  {
+    "projekt0n/github-nvim-theme",
+    version = 'v0.0.7',
+  },
+
+  {
+    "jay-babu/mason-null-ls.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "williamboman/mason.nvim",
+      "jose-elias-alvarez/null-ls.nvim",
+    },
+  },
+
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    config = function()
+      require("null-ls").setup {}
+    end,
+  },
+
+  {
+    "SmiteshP/nvim-navic",
+    requires = "neovim/nvim-lspconfig",
+  },
+
+  {
+    "kylechui/nvim-surround",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
+    end
+  },
+
+  {
+    "windwp/nvim-ts-autotag",
+  },
+
+  {
+    "cpea2506/one_monokai.nvim",
+    config = function()
+      require("one_monokai").setup {}
+    end,
+  },
+
+  {
+    "simrat39/symbols-outline.nvim",
+  },
+
+  {
+    "aserowy/tmux.nvim",
+    config = function()
+      return require("tmux").setup({
+        copy_sync = {
+          enable = false,
+        },
+        navigation = {
+          -- cycles to opposite pane while navigating into the border
+          cycle_navigation = false,
+
+          -- enables default keybindings (C-hjkl) for normal mode
+          enable_default_keybindings = true,
+
+          -- prevents unzoom tmux when navigating beyond vim border
+          persist_zoom = false,
+        },
+        resize = {
+          -- enables default keybindings (A-hjkl) for normal mode
+          enable_default_keybindings = true,
+
+          -- sets resize steps for x axis
+          resize_step_x = 5,
+
+          -- sets resize steps for y axis
+          resize_step_y = 5,
+        }
+      })
+    end,
+  },
+
+  {
+    "akinsho/toggleterm.nvim",
+    config = function()
+      require("toggleterm").setup {}
+    end,
+  },
+
+  {
+    "folke/tokyonight.nvim",
+    config = function()
+      require("tokyonight").setup {}
+    end,
+  },
+
+  -- neovim treesitter splitjoin
+  {
+    'Wansmer/treesj',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    config = function()
+      require('treesj').setup({
+        use_default_keymaps = false,
+      })
+    end,
+  },
+
+  {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
+
+    },
+  },
+
+  {
+    "elzr/vim-json",
+  },
+
+  {
+    "preservim/vim-markdown",
+    dependencies = {
+      "godlygeek/tabular",
+    },
+  },
+
+  {
+    "vim-pandoc/vim-pandoc-syntax",
+  },
+
+  -- putting everything directly in this table instead
+  -- { import = 'custom.plugins' },
 }, {})
 
 -- [[ Setting options ]]
@@ -619,8 +751,38 @@ require('Comment').setup {
   pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
 }
 
+-- Neotree
+vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+-- vim-json
+vim.cmd([[ let g:vim_json_syntax_conceal = 0 ]])
+
+-- vim-markdown
+-- reference: https://jdhao.github.io/2019/01/15/markdown_edit_preview_nvim/
+
+-- disable header folding
+vim.cmd([[ let g:vim_markdown_folding_disabled = 1 ]])
+
+-- do not use conceal feature, the implementation is not so good
+vim.cmd([[ let g:vim_markdown_conceal = 0 ]])
+
+-- disable math tex conceal feature
+vim.cmd([[ let g:tex_conceal = "" ]])
+vim.cmd([[ let g:vim_markdown_math = 1 ]])
+
+-- support front matter of various format
+vim.cmd([[ let g:vim_markdown_frontmatter = 1 ]])
+vim.cmd([[ let g:vim_markdown_toml_frontmatter = 1 ]])
+vim.cmd([[ let g:vim_markdown_json_frontmatter = 1 ]])
+
+-- pandoc markdown code blocks
+vim.cmd([[
+  let g:pandoc#syntax#codeblocks#embeds#langs = [ "bash", "c", "cpp", "html", "java", "javascript", "py=python", "python", "rust", "shell=sh", "sh", "typescript" ]
+  let g:pandoc#syntax#conceal#conceal_code_blocks=1
+]])
 
 -- for vim-pandoc
 -- TODO: code blocks are slightly broken (only the first code block is correct...)
