@@ -759,12 +759,11 @@ end
 -- keywords: Mason mason add lsp add lsp-add add-lsp language
 local servers = {
   clangd = {},
-  -- gopls = {},
   pyright = {},
-  -- rust_analyzer = {},
   tsserver = {},
   cssls = {},
   gopls = {},
+  rust_analyzer = {},
 
   -- lua_ls = {
   --   Lua = {
@@ -812,6 +811,7 @@ mason_null_ls.setup({
     "prettier",
     "black",
     "gofumpt",
+    "rustfmt",
   },
   automatic_installation = false,
   handlers = {
@@ -824,6 +824,9 @@ mason_null_ls.setup({
     end,
     gofumpt = function(source_name, methods)
       null_ls.register(formatting.gofumpt.with({  }))
+    end,
+    rustfmt = function(source_name, methods)
+      null_ls.register(formatting.rustfmt.with({  }))
     end,
   },
 })
