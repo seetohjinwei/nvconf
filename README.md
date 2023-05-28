@@ -14,6 +14,7 @@ rm -rf ~/.local/share/nvim
 
 mkdir -p ~/.config/nvim
 
+# Basically, download this repo into `~/.config/nvim/`.
 git clone https://github.com/seetohjinwei/nvconf.git ~/.config/nvim
 
 # opening neovim will install everything you need
@@ -54,4 +55,12 @@ This config uses `;` as leader key.
 - `toggleterm.nvim` - much better terminal
     - installed, but using tmux to spawn terminal externally instead
 
-Forked from [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim).
+Configured to work best with [my tmux config](https://github.com/seetohjinwei/tmuxconf).
+
+```sh
+# neat aliases
+alias nvconf="cd ~/.config/nvim && nvim && cd -"
+alias nv="nvim"
+```
+
+Originally forked from [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim).
