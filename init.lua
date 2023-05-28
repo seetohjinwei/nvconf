@@ -96,7 +96,7 @@ require('lazy').setup({
         changedelete = { text = '~' },
       },
     },
-    lazy = true,
+    lazy = false,
     keys = {
       { "<leader>gb", "<Cmd>Gitsigns toggle_current_line_blame<CR>", default_opts, desc = "Gitsigns Toggle" },
     },
@@ -764,6 +764,7 @@ local servers = {
   -- rust_analyzer = {},
   tsserver = {},
   cssls = {},
+  gopls = {},
 
   -- lua_ls = {
   --   Lua = {
@@ -810,6 +811,7 @@ mason_null_ls.setup({
   ensure_installed = {
     "prettier",
     "black",
+    "gofumpt",
   },
   automatic_installation = false,
   handlers = {
@@ -819,6 +821,9 @@ mason_null_ls.setup({
     end,
     black = function(source_name, methods)
       null_ls.register(formatting.black.with({ extra_args = { "--fast" } }))
+    end,
+    gofumpt = function(source_name, methods)
+      null_ls.register(formatting.gofumpt.with({  }))
     end,
   },
 })
