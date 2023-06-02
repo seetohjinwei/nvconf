@@ -51,7 +51,13 @@ This config uses `;` as leader key.
     - `noted.nvim` - my own "plugin" for quick notes / todos
 - `tmux.nvim` - for integration with tmux
 - `indent-blankline.nvim` - indentation guide
-- `nvim-surround` - I'll eventually learn this
+- `nvim-surround`
+    - `ysiw(` - surround with parenthesis with space around
+    - `ysiw)` - surround with parenthesis without space around
+    - `ysi"` - surround with quotes
+    - `cs'"` - change surround
+    - `dst` - delete surround
+    - `csth1<CR>` - change surrounding tag types
 - `toggleterm.nvim` - much better terminal
     - installed, but using tmux to spawn terminal externally instead
 
