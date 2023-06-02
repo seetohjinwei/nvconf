@@ -445,6 +445,13 @@ require('lazy').setup({
     end
   },
 
+  -- Enables buffer text as fallback.
+  {
+    "/hrsh7th/cmp-buffer",
+    config = function ()
+    end
+  },
+
   -- putting everything directly in this table instead
   -- { import = 'custom.plugins' },
 }, {})
@@ -641,7 +648,6 @@ require('nvim-treesitter.configs').setup {
     'make', 'cmake',
     'json', 'yaml', 'toml',
     'dockerfile',
-
     -- I don't use vimfiles, but it's here just in case
     'vimdoc', 'vim',
   },
@@ -907,13 +913,31 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
     { name = "copilot" },
+    {
+      name = "buffer",
+      option = {
+        -- gets all buffers
+        -- get_bufnrs = function()
+        --   return vim.api.nvim_list_bufs()
+        -- end,
+
+        -- gets visible buffers
+        get_bufnrs = function()
+          local bufs = {}
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            bufs[vim.api.nvim_win_get_buf(win)] = true
+          end
+          return vim.tbl_keys(bufs)
+        end,
+      },
+    },
   },
   sorting = {
     priority_weight = 2,
     comparators = {
       require("copilot_cmp.comparators").prioritize,
 
-      -- Below is the default comparitor list and order for nvim-cmp
+      -- Below is the default comparato list and order for nvim-cmp
       cmp.config.compare.offset,
       -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
       cmp.config.compare.exact,
