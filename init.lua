@@ -841,10 +841,16 @@ mason_null_ls.setup({
     "rustfmt",
   },
   automatic_installation = false,
+  -- ensure that args like "--print-width 120" are split into **two** strings => "--print-width", "120"
   handlers = {
     function() end, -- disable automatic setup of all null-ls sources
     prettier = function(source_name, methods)
-      null_ls.register(formatting.prettier.with({ extra_args = { "--trailing-comma all", "--print-width 120" } }))
+      null_ls.register(formatting.prettier.with({ extra_args = {
+        "--trailing-comma",
+        "all",
+        "--print-width",
+        "120",
+      } }))
     end,
     black = function(source_name, methods)
       null_ls.register(formatting.black.with({ extra_args = { "--fast" } }))
