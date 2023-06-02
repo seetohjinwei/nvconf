@@ -201,6 +201,16 @@ require('lazy').setup({
   },
 
   {
+    "ribru17/bamboo.nvim",
+    lazy = true,
+    -- priority = 1000,
+    config = function()
+      -- load colorscheme here
+      -- vim.cmd [[ colorscheme bamboo ]]
+    end,
+  },
+
+  {
     "windwp/nvim-autopairs",
     config = function()
       require("nvim-autopairs").setup {}
