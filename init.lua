@@ -586,6 +586,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+-- Don't save a newline at the end of *.in files.
+vim.cmd [[ autocmd BufNewFile,BufFilePre,BufRead *.in setlocal noeol binary fileformat=dos ]]
+
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
