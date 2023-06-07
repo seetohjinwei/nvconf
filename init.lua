@@ -457,8 +457,16 @@ require('lazy').setup({
 
   -- Enables buffer text as fallback.
   {
-    "/hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-buffer",
     config = function ()
+    end
+  },
+
+  -- background coloring for hex codes and the like
+  {
+    "norcalli/nvim-colorizer.lua",
+    config = function ()
+      require("colorizer").setup()
     end
   },
 
