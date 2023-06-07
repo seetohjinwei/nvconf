@@ -851,13 +851,16 @@ mason_lspconfig.setup_handlers {
 local null_ls = require("null-ls")
 local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
+local code_actions = null_ls.builtins.code_actions
 null_ls.setup()
 
 local mason_null_ls = require("mason-null-ls")
 mason_null_ls.setup({
   ensure_installed = {
     "prettier",
+    "eslint_d",
     "black",
+    "flake8",
     "gofumpt",
     "rustfmt",
   },
@@ -872,6 +875,14 @@ mason_null_ls.setup({
         "--print-width",
         "120",
       } }))
+    end,
+    eslint_d = function(source_name, methods)
+      null_ls.register(formatting.eslint_d.with({  }))
+      null_ls.register(diagnostics.eslint_d.with({  }))
+      null_ls.register(code_actions.eslint_d.with({  }))
+    end,
+    flake8 = function(source_name, methods)
+      null_ls.register(diagnostics.flake8.with({  }))
     end,
     black = function(source_name, methods)
       null_ls.register(formatting.black.with({ extra_args = { "--fast" } }))
