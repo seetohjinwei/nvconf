@@ -882,7 +882,10 @@ mason_null_ls.setup({
       null_ls.register(code_actions.eslint_d.with({  }))
     end,
     flake8 = function(source_name, methods)
-      null_ls.register(diagnostics.flake8.with({  }))
+      null_ls.register(diagnostics.flake8.with({ extra_args = {
+        "--max-line-length",
+        "120",
+      } }))
     end,
     black = function(source_name, methods)
       null_ls.register(formatting.black.with({ extra_args = { "--fast" } }))
