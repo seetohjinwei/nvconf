@@ -857,7 +857,7 @@ null_ls.setup()
 local mason_null_ls = require("mason-null-ls")
 mason_null_ls.setup({
   ensure_installed = {
-    "prettier",
+    "prettierd",
     "eslint_d",
     "black",
     "flake8",
@@ -868,13 +868,10 @@ mason_null_ls.setup({
   -- ensure that args like "--print-width 120" are split into **two** strings => "--print-width", "120"
   handlers = {
     function() end, -- disable automatic setup of all null-ls sources
-    prettier = function(source_name, methods)
-      null_ls.register(formatting.prettier.with({ extra_args = {
-        "--trailing-comma",
-        "all",
-        "--print-width",
-        "120",
-      } }))
+    prettierd = function(source_name, methods)
+      null_ls.register(formatting.prettierd.with({
+        env = { PRETTIERD_DEFAULT_CONFIG = vim.fn.expand( "~/.config/nvim/.prettierrc.json" ), },
+      }))
     end,
     eslint_d = function(source_name, methods)
       null_ls.register(formatting.eslint_d.with({  }))
