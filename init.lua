@@ -56,7 +56,11 @@ require('lazy').setup({
   },
 
   -- Detect tabstop and shiftwidth automatically
-  'tpope/vim-sleuth',
+  {
+    'tpope/vim-sleuth',
+    config = function()
+    end,
+  },
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
@@ -523,6 +527,9 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
+vim.o.expandtab = true
+vim.o.tabstop = 2
+
 -- z=: bring up word suggestions
 -- zg: add to dictionary
 -- zw: remove from dictionary
@@ -743,7 +750,7 @@ require('nvim-treesitter.configs').setup {
 -- Diagnostic keymaps
 map('n', 'g[', vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" });
 map('n', 'g]', vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
--- map('n', '<leader>p', vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
+map('n', '<leader>w', vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
 -- map('n', '<leader>q', vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 
 -- tmux
@@ -765,7 +772,9 @@ local on_attach = function(client, bufnr)
       desc = 'LSP: ' .. desc
     end
 
-    navic.attach(client, bufnr)
+    if client.server_capabilities.documentSymbolProvider then
+      navic.attach(client, bufnr)
+    end
 
     map('n', keys, func, { buffer = bufnr, desc = desc })
   end
@@ -778,7 +787,7 @@ local on_attach = function(client, bufnr)
   nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  -- nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
@@ -812,6 +821,7 @@ local servers = {
   cssls = {},
   gopls = {},
   rust_analyzer = {},
+  angularls = {},
 
   -- lua_ls = {
   --   Lua = {
