@@ -529,6 +529,7 @@ vim.o.termguicolors = true
 
 vim.o.expandtab = true
 vim.o.tabstop = 2
+vim.o.shiftwidth = 2
 
 -- z=: bring up word suggestions
 -- zg: add to dictionary
@@ -985,11 +986,26 @@ cmp.setup {
     comparators = {
       require("copilot_cmp.comparators").prioritize,
 
-      -- Below is the default comparato list and order for nvim-cmp
+      -- Below is the default comparator list and order for nvim-cmp
       cmp.config.compare.offset,
       -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
       cmp.config.compare.exact,
       cmp.config.compare.score,
+
+      -- copied from cmp-under, but I don't think I need the plugin for this.
+      -- I might add some more of my own.
+      function(entry1, entry2)
+        local _, entry1_under = entry1.completion_item.label:find "^_+"
+        local _, entry2_under = entry2.completion_item.label:find "^_+"
+        entry1_under = entry1_under or 0
+        entry2_under = entry2_under or 0
+        if entry1_under > entry2_under then
+          return false
+        elseif entry1_under < entry2_under then
+          return true
+        end
+      end,
+
       cmp.config.compare.recently_used,
       cmp.config.compare.locality,
       cmp.config.compare.kind,
