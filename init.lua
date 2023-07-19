@@ -73,7 +73,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim', opts = {}, tag = "legacy" }, -- using legacy tag as fidget.nvim is going through a rewrite
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -555,6 +555,8 @@ map('i', '<Leader>d', '<Esc>dd', opts)
 
 map('n', '<Leader>;', 'mpA;<Esc>`p:delmarks p<CR>', opts)
 map('i', '<Leader>;', '<Esc>mpA;<Esc>`p:delmarks p<CR>a', opts)
+
+map('i', ';\'', ';', opts)
 
 map('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 
