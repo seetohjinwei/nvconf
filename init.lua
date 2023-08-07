@@ -104,7 +104,8 @@ require('lazy').setup({
     },
     lazy = false,
     keys = {
-      { "<leader>gb", "<Cmd>Gitsigns toggle_current_line_blame<CR>", default_opts, desc = "Gitsigns Toggle" },
+      { "<leader>gb", "<Cmd>Gitsigns toggle_current_line_blame<CR>", default_opts, desc = "Gitsigns Toggle Blame" },
+      { "<leader>td", "<Cmd>Gitsigns toggle_deleted<CR>", default_opts, desc = "Gitsigns Toggle Deleted" },
     },
   },
 
