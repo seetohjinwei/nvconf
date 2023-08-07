@@ -1,3 +1,6 @@
+-- TODO: add temporary maximise / focus pane (similar to tmux <leader>m)
+-- TODO: disable the breadcrumbs (looks cool, but useless lol)
+
 local map = vim.keymap.set
 local default_opts = { noremap = true, silent = true }
 
@@ -555,6 +558,9 @@ vim.opt.spellcapcheck = ''
 
 -- my mappings
 
+-- keybindings
+local opts = default_opts
+
 map('n', '<Leader>tt', ':vsplit<CR>', opts)
 map('n', '<Leader>ty', ':split<CR>', opts)
 map('n', '<Leader>tw', ':close<CR>', opts)
@@ -564,6 +570,9 @@ map('i', '<Leader>d', '<Esc>dd', opts)
 
 map('n', '<Leader>;', 'mpA;<Esc>`p:delmarks p<CR>', opts)
 map('i', '<Leader>;', '<Esc>mpA;<Esc>`p:delmarks p<CR>a', opts)
+
+-- change increment, because C-a is used by tmux
+map('n', '<C-s>', '<C-a>', opts)
 
 map('i', ';\'', ';', opts)
 
