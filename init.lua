@@ -760,8 +760,8 @@ require('nvim-treesitter.configs').setup {
 }
 
 -- Diagnostic keymaps
-map('n', 'g[', vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" });
-map('n', 'g]', vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
+map('n', 'g9', vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" });
+map('n', 'g0', vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
 map('n', '<leader>w', vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
 -- map('n', '<leader>q', vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 
