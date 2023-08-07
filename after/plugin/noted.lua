@@ -20,19 +20,19 @@ local function safe_create_file(filepath)
   os.execute("mkdir -p " .. path)
 end
 
-function _noted_global()
+function noted_global()
   safe_create_dir(root_dir)
 
   cmd.edit(root_dir .. "global.md")
 end
 
-function _noted_todo()
+function noted_todo()
   safe_create_dir(root_dir)
 
   cmd.edit(root_dir .. "todo.md")
 end
 
-function _noted_project()
+function noted_project()
   safe_create_dir(root_dir)
 
   local cwd = vim.fn.getcwd()
@@ -42,10 +42,10 @@ function _noted_project()
 end
 
 -- Global Notes
-api.nvim_create_user_command("NotedGlobal", _noted_global, {})
+api.nvim_create_user_command("NotedGlobal", noted_global, {})
 -- Global Todo
-api.nvim_create_user_command("NotedTodo", _noted_todo, {})
+api.nvim_create_user_command("NotedTodo", noted_todo, {})
 -- Project Notes
-api.nvim_create_user_command("NotedProject", _noted_project, {})
+api.nvim_create_user_command("NotedProject", noted_project, {})
 -- api.nvim_create_user_command("NotedTest", function()
 -- end, {})
