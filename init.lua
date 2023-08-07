@@ -474,6 +474,15 @@ require('lazy').setup({
     end
   },
 
+  -- case-preserving substitute (Subvert)
+  -- switching between cases (Coercion)
+  {
+    "tpope/vim-abolish",
+    config = function ()
+      -- require("colorizer").setup()
+    end
+  },
+
   -- putting everything directly in this table instead
   -- { import = 'custom.plugins' },
 }, {})
