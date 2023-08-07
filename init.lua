@@ -1,5 +1,3 @@
--- TODO: add temporary maximise / focus pane (similar to tmux <leader>m)
-
 local map = vim.keymap.set
 local default_opts = { noremap = true, silent = true }
 
@@ -598,6 +596,9 @@ map('n', '<Leader>00', '<Cmd>ToggleColorscheme<CR>', opts)
 map('n', '<leader>99', "<Cmd>Telescope colorscheme<CR>", { desc = 'Colorscheme with preview' })
 
 map('n', '<leader>ff', "<Cmd>lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>", default_opts) -- format file
+
+-- My own temporary maximise "plugin".
+map('n', '<C-w>m', '<Cmd>TempMaximiseToggle<CR>', opts)
 
 -- My own noted "plugin".
 map('n', '<Leader>qq', '<Cmd>NotedGlobal<CR>', opts)
