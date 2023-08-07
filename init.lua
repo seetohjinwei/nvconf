@@ -1,5 +1,4 @@
 -- TODO: add temporary maximise / focus pane (similar to tmux <leader>m)
--- TODO: disable the breadcrumbs (looks cool, but useless lol)
 
 local map = vim.keymap.set
 local default_opts = { noremap = true, silent = true }
@@ -122,7 +121,7 @@ require('lazy').setup({
       sections = {
         lualine_c = {
           "filename",
-          "navic", -- navic goes after filename
+          -- "navic", -- navic goes after filename
 
           -- Component specific options
           color_correction = nil, -- Can be nil, "static" or "dynamic". This option is useful only when you have highlights enabled.
@@ -132,7 +131,7 @@ require('lazy').setup({
           -- Setting it to "dynamic" will keep updating the highlights according to the current modes colors for
           --   the current section.
 
-          navic_opts = nil  -- lua table with same format as setup's option. All options except "lsp" options take effect when set here.
+          -- navic_opts = nil  -- lua table with same format as setup's option. All options except "lsp" options take effect when set here.
         }
       },
       -- alternatively, use winbar (top status bar) for navic
@@ -264,12 +263,12 @@ require('lazy').setup({
     end,
   },
 
-  {
-    "SmiteshP/nvim-navic",
-    dependencies = {
-      "neovim/nvim-lspconfig",
-    },
-  },
+  -- {
+  --   "SmiteshP/nvim-navic",
+  --   dependencies = {
+  --     "neovim/nvim-lspconfig",
+  --   },
+  -- },
 
   {
     "kylechui/nvim-surround",
@@ -777,7 +776,7 @@ map('n', '<leader>w', vim.diagnostic.open_float, { desc = "Open floating diagnos
 -- tmux
 -- map('n', 'CTRL', vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
 
-local navic = require("nvim-navic")
+-- local navic = require("nvim-navic")
 
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
@@ -793,9 +792,9 @@ local on_attach = function(client, bufnr)
       desc = 'LSP: ' .. desc
     end
 
-    if client.server_capabilities.documentSymbolProvider then
-      navic.attach(client, bufnr)
-    end
+    -- if client.server_capabilities.documentSymbolProvider then
+    --   navic.attach(client, bufnr)
+    -- end
 
     map('n', keys, func, { buffer = bufnr, desc = desc })
   end
