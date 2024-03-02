@@ -148,9 +148,10 @@ require('lazy').setup({
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
+    main = "ibl",
     opts = {
-      char = '┊',
-      show_trailing_blankline_indent = false,
+      -- char = '┊',
+      -- show_trailing_blankline_indent = false,
     },
   },
 
@@ -829,13 +830,14 @@ require('nvim-treesitter.configs').setup {
       },
     },
   },
-  context_commentstring = {
-    enable = true,
-    enable_autocmd = false,
-  },
   autotag = {
     enable = true,
   },
+}
+
+require('ts_context_commentstring').setup {
+  enable = true,
+  enable_autocmd = false,
 }
 
 -- Diagnostic keymaps
