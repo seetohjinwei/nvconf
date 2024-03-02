@@ -607,6 +607,8 @@ vim.o.expandtab = true
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
 
+vim.cmd [[ autocmd Filetype go setlocal tabstop=8 shiftwidth=8 softtabstop=8 ]]
+
 -- z=: bring up word suggestions
 -- zg: add to dictionary
 -- zw: remove from dictionary
@@ -751,6 +753,7 @@ require('nvim-treesitter.configs').setup {
     'lua',
     'ruby',
     'bash',
+    'elixir',
 
     -- Make words look pretty
     -- 'markdown', -- using vim-pandoc-syntax for this
@@ -910,6 +913,7 @@ local servers = {
   gopls = {},
   rust_analyzer = {},
   angularls = {},
+  elixirls = {},
 
   -- lua_ls = {
   --   Lua = {
