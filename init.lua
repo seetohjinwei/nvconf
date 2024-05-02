@@ -440,26 +440,26 @@ require('lazy').setup({
     end,
   },
 
-  {
+  -- {
+  --
+  --   "zbirenbaum/copilot.lua",
+  --   -- cmd = "Copilot",
+  --   -- event = "InsertEnter",
+  --   config = function()
+  --     return require("copilot").setup({
+  --       suggestion = { enabled = false },
+  --       panel = { enabled = false },
+  --     })
+  --   end,
+  -- },
+  --
 
-    "zbirenbaum/copilot.lua",
-    -- cmd = "Copilot",
-    -- event = "InsertEnter",
-    config = function()
-      return require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-      })
-    end,
-  },
-
-
-  {
-    "zbirenbaum/copilot-cmp",
-    config = function ()
-      require("copilot_cmp").setup()
-    end
-  },
+  -- {
+  --   "zbirenbaum/copilot-cmp",
+  --   config = function ()
+  --     require("copilot_cmp").setup()
+  --   end
+  -- },
 
   -- Enables buffer text as fallback.
   {
@@ -512,7 +512,10 @@ require('lazy').setup({
   -- setup debugger, https://github.com/dreamsofcode-io/neovim-python/blob/main/plugins.lua
   {
     "rcarriga/nvim-dap-ui",
-    dependencies = "mfussenegger/nvim-dap",
+    dependencies = {
+      "mfussenegger/nvim-dap",
+      "nvim-neotest/nvim-nio",
+    },
     config = function()
       local dap = require("dap")
       local dapui = require("dapui")
@@ -1055,7 +1058,7 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
-    { name = "copilot" },
+    -- { name = "copilot" },
     {
       name = "buffer",
       option = {
@@ -1078,7 +1081,7 @@ cmp.setup {
   sorting = {
     priority_weight = 2,
     comparators = {
-      require("copilot_cmp.comparators").prioritize,
+      -- require("copilot_cmp.comparators").prioritize,
 
       -- Below is the default comparator list and order for nvim-cmp
       cmp.config.compare.offset,
