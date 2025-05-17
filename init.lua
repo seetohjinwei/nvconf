@@ -247,21 +247,21 @@ require('lazy').setup({
     lazy = true,
   },
 
-  {
-    "jay-babu/mason-null-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "williamboman/mason.nvim",
-      "jose-elias-alvarez/null-ls.nvim",
-    },
-  },
+  -- {
+  --   "jay-babu/mason-null-ls.nvim",
+  --   event = { "BufReadPre", "BufNewFile" },
+  --   dependencies = {
+  --     "williamboman/mason.nvim",
+  --     "jose-elias-alvarez/null-ls.nvim",
+  --   },
+  -- },
 
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    config = function()
-      require("null-ls").setup {}
-    end,
-  },
+  -- {
+  --   "jose-elias-alvarez/null-ls.nvim",
+  --   config = function()
+  --     require("null-ls").setup {}
+  --   end,
+  -- },
 
   -- {
   --   "SmiteshP/nvim-navic",
@@ -913,7 +913,7 @@ end
 local servers = {
   clangd = {},
   pyright = {},
-  tsserver = {},
+  -- tsserver = {},
   cssls = {},
   gopls = {},
   rust_analyzer = {},
@@ -945,64 +945,64 @@ mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
 }
 
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    require('lspconfig')[server_name].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = servers[server_name],
-    }
-  end,
-}
+-- mason_lspconfig.setup_handlers {
+--   function(server_name)
+--     require('lspconfig')[server_name].setup {
+--       capabilities = capabilities,
+--       on_attach = on_attach,
+--       settings = servers[server_name],
+--     }
+--   end,
+-- }
 
-local null_ls = require("null-ls")
-local formatting = null_ls.builtins.formatting
-local diagnostics = null_ls.builtins.diagnostics
-local code_actions = null_ls.builtins.code_actions
-null_ls.setup()
+-- local null_ls = require("null-ls")
+-- local formatting = null_ls.builtins.formatting
+-- local diagnostics = null_ls.builtins.diagnostics
+-- local code_actions = null_ls.builtins.code_actions
+-- null_ls.setup()
 
-local mason_null_ls = require("mason-null-ls")
-mason_null_ls.setup({
-  ensure_installed = {
-    "prettierd",
-    "eslint_d",
-    "black",
-    "flake8",
-    "debugpy",
-    "gofumpt",
-    "rustfmt",
-  },
-  automatic_installation = false,
-  -- ensure that args like "--print-width 120" are split into **two** strings => "--print-width", "120"
-  handlers = {
-    function() end, -- disable automatic setup of all null-ls sources
-    prettierd = function(source_name, methods)
-      null_ls.register(formatting.prettierd.with({
-        env = { PRETTIERD_DEFAULT_CONFIG = vim.fn.expand( "~/.config/nvim/.prettierrc.json" ), },
-      }))
-    end,
-    eslint_d = function(source_name, methods)
-      null_ls.register(formatting.eslint_d.with({  }))
-      null_ls.register(diagnostics.eslint_d.with({  }))
-      null_ls.register(code_actions.eslint_d.with({  }))
-    end,
-    flake8 = function(source_name, methods)
-      null_ls.register(diagnostics.flake8.with({ extra_args = {
-        "--max-line-length",
-        "120",
-      } }))
-    end,
-    black = function(source_name, methods)
-      null_ls.register(formatting.black.with({ extra_args = { "--fast" } }))
-    end,
-    gofumpt = function(source_name, methods)
-      null_ls.register(formatting.gofumpt.with({  }))
-    end,
-    rustfmt = function(source_name, methods)
-      null_ls.register(formatting.rustfmt.with({  }))
-    end,
-  },
-})
+-- local mason_null_ls = require("mason-null-ls")
+-- mason_null_ls.setup({
+--   ensure_installed = {
+--     "prettierd",
+--     "eslint_d",
+--     "black",
+--     "flake8",
+--     "debugpy",
+--     "gofumpt",
+--     "rustfmt",
+--   },
+--   automatic_installation = false,
+--   -- ensure that args like "--print-width 120" are split into **two** strings => "--print-width", "120"
+--   handlers = {
+--     function() end, -- disable automatic setup of all null-ls sources
+--     prettierd = function(source_name, methods)
+--       null_ls.register(formatting.prettierd.with({
+--         env = { PRETTIERD_DEFAULT_CONFIG = vim.fn.expand( "~/.config/nvim/.prettierrc.json" ), },
+--       }))
+--     end,
+--     eslint_d = function(source_name, methods)
+--       null_ls.register(formatting.eslint_d.with({  }))
+--       null_ls.register(diagnostics.eslint_d.with({  }))
+--       null_ls.register(code_actions.eslint_d.with({  }))
+--     end,
+--     flake8 = function(source_name, methods)
+--       null_ls.register(diagnostics.flake8.with({ extra_args = {
+--         "--max-line-length",
+--         "120",
+--       } }))
+--     end,
+--     black = function(source_name, methods)
+--       null_ls.register(formatting.black.with({ extra_args = { "--fast" } }))
+--     end,
+--     gofumpt = function(source_name, methods)
+--       null_ls.register(formatting.gofumpt.with({  }))
+--     end,
+--     rustfmt = function(source_name, methods)
+--       null_ls.register(formatting.rustfmt.with({  }))
+--     end,
+--   },
+-- })
 
 -- nvim-cmp setup
 local cmp = require 'cmp'
