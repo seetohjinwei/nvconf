@@ -207,16 +207,6 @@ require('lazy').setup({
   },
 
   {
-    "ribru17/bamboo.nvim",
-    lazy = true,
-    -- priority = 1000,
-    config = function()
-      -- load colorscheme here
-      -- vim.cmd [[ colorscheme bamboo ]]
-    end,
-  },
-
-  {
     "windwp/nvim-autopairs",
     config = function()
       require("nvim-autopairs").setup {}
@@ -232,7 +222,7 @@ require('lazy').setup({
       "MunifTanjim/nui.nvim",
     },
     keys = {
-      { "<leader>ee", "<Cmd>Neotree toggle<CR>", default_opts, desc = "NeoTree" },
+      { "<leader>e", "<Cmd>Neotree toggle<CR>", default_opts, desc = "NeoTree" },
     },
     config = function ()
       vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
@@ -240,35 +230,6 @@ require('lazy').setup({
       require('neo-tree').setup {}
     end,
   },
-
-  {
-    "projekt0n/github-nvim-theme",
-    version = 'v0.0.7',
-    lazy = true,
-  },
-
-  -- {
-  --   "jay-babu/mason-null-ls.nvim",
-  --   event = { "BufReadPre", "BufNewFile" },
-  --   dependencies = {
-  --     "williamboman/mason.nvim",
-  --     "jose-elias-alvarez/null-ls.nvim",
-  --   },
-  -- },
-
-  -- {
-  --   "jose-elias-alvarez/null-ls.nvim",
-  --   config = function()
-  --     require("null-ls").setup {}
-  --   end,
-  -- },
-
-  -- {
-  --   "SmiteshP/nvim-navic",
-  --   dependencies = {
-  --     "neovim/nvim-lspconfig",
-  --   },
-  -- },
 
   {
     "kylechui/nvim-surround",
@@ -279,29 +240,6 @@ require('lazy').setup({
         -- Configuration here, or leave empty to use defaults
       })
     end
-  },
-
-  {
-    "windwp/nvim-ts-autotag",
-  },
-
-  {
-    "cpea2506/one_monokai.nvim",
-    lazy = true,
-    config = function()
-      -- require("one_monokai").setup {}
-    end,
-  },
-
-  {
-    "simrat39/symbols-outline.nvim",
-    lazy = true,
-    keys = {
-      { "<leader>ew", "<Cmd>SymbolsOutline<CR>", default_opts, desc = "SymbolsOutline" },
-    },
-    config = function()
-      require("symbols-outline").setup()
-    end,
   },
 
   {
@@ -335,25 +273,6 @@ require('lazy').setup({
     end,
   },
 
-  {
-    "akinsho/toggleterm.nvim",
-    lazy = true,
-    keys = {
-      { "<leader>tm", "<Cmd>ToggleTerm<CR>", default_opts, desc = "ToggleTerm" },
-    },
-    config = function()
-      require("toggleterm").setup {}
-    end,
-  },
-
-  {
-    "folke/tokyonight.nvim",
-    lazy = true,
-    config = function()
-      -- require("tokyonight").setup {}
-    end,
-  },
-
   -- neovim treesitter splitjoin
   {
     'Wansmer/treesj',
@@ -371,108 +290,10 @@ require('lazy').setup({
     end,
   },
 
-  {
-    "folke/trouble.nvim",
-    lazy = true,
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    keys = {
-      { "<leader>er", "<Cmd>TroubleToggle<CR>", default_opts, desc = "Trouble Toggle" },
-    },
-    opts = {
-
-    },
-  },
-
-  {
-    "elzr/vim-json",
-    config = function()
-      vim.cmd([[ let g:vim_json_syntax_conceal = 0 ]])
-    end,
-  },
-
-  {
-    "preservim/vim-markdown",
-    dependencies = {
-      "godlygeek/tabular",
-    },
-    config = function()
-      -- reference: https://jdhao.github.io/2019/01/15/markdown_edit_preview_nvim/
-
-      -- disable header folding
-      vim.cmd([[ let g:vim_markdown_folding_disabled = 1 ]])
-
-      -- do not use conceal feature, the implementation is not so good
-      vim.cmd([[ let g:vim_markdown_conceal = 0 ]])
-
-      -- disable math tex conceal feature
-      vim.cmd([[ let g:tex_conceal = "" ]])
-      vim.cmd([[ let g:vim_markdown_math = 1 ]])
-
-      -- support front matter of various format
-      vim.cmd([[ let g:vim_markdown_frontmatter = 1 ]])
-      vim.cmd([[ let g:vim_markdown_toml_frontmatter = 1 ]])
-      vim.cmd([[ let g:vim_markdown_json_frontmatter = 1 ]])
-
-      -- pandoc markdown code blocks
-      vim.cmd([[
-        let g:pandoc#syntax#codeblocks#embeds#langs = [ "bash", "c", "cpp", "html", "java", "javascript", "py=python", "python", "rust", "shell=sh", "sh", "typescript" ]
-        let g:pandoc#syntax#conceal#conceal_code_blocks=1
-      ]])
-    end,
-  },
-
-  {
-    "vim-pandoc/vim-pandoc-syntax",
-    config = function()
-      -- TODO: code blocks are slightly broken (only the first code block is correct...)
-      vim.o.conceallevel = 0
-      vim.cmd([[
-        augroup pandoc_syntax
-          au! BufNewFile,BufFilePre,BufRead *.md
-            \ set filetype=markdown.pandoc |
-            \ setlocal conceallevel=2
-        augroup END
-      ]])
-
-      vim.cmd([[
-        let g:markdown_fenced_languages = ['coffee', 'css', 'erb=eruby', 'javascript', 'js=javascript', 'json=javascript', 'ruby', 'sass', 'xml', 'html']
-      ]])
-    end,
-  },
-
-  -- {
-  --
-  --   "zbirenbaum/copilot.lua",
-  --   -- cmd = "Copilot",
-  --   -- event = "InsertEnter",
-  --   config = function()
-  --     return require("copilot").setup({
-  --       suggestion = { enabled = false },
-  --       panel = { enabled = false },
-  --     })
-  --   end,
-  -- },
-  --
-
-  -- {
-  --   "zbirenbaum/copilot-cmp",
-  --   config = function ()
-  --     require("copilot_cmp").setup()
-  --   end
-  -- },
-
   -- Enables buffer text as fallback.
   {
     "hrsh7th/cmp-buffer",
     config = function ()
-    end
-  },
-
-  -- background coloring for hex codes and the like
-  {
-    "norcalli/nvim-colorizer.lua",
-    config = function ()
-      require("colorizer").setup()
     end
   },
 
@@ -483,75 +304,6 @@ require('lazy').setup({
     config = function ()
       -- require("colorizer").setup()
     end
-  },
-
-  -- {
-  --   "nvim-neorg/neorg",
-  --   build = ":Neorg sync-parsers",
-  --   dependencies = { "nvim-lua/plenary.nvim" },
-  --   config = function()
-  --     require("neorg").setup {
-  --       load = {
-  --         ["core.defaults"] = {}, -- Loads default behaviour
-  --         ["core.concealer"] = {}, -- Adds pretty icons to your documents
-  --         ["core.dirman"] = { -- Manages Neorg workspaces
-  --           config = {
-  --             workspaces = {
-  --               nus = "~/norg/nus",
-  --               notes = "~/norg/notes",
-  --             },
-  --           },
-  --         },
-  --       },
-  --     }
-  --
-  --     vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, { pattern = {"*.norg"}, command = "set conceallevel=3" })
-  --   end,
-  -- },
-
-  -- setup debugger, https://github.com/dreamsofcode-io/neovim-python/blob/main/plugins.lua
-  {
-    "rcarriga/nvim-dap-ui",
-    dependencies = {
-      "mfussenegger/nvim-dap",
-      "nvim-neotest/nvim-nio",
-    },
-    config = function()
-      local dap = require("dap")
-      local dapui = require("dapui")
-      dapui.setup()
-      dap.listeners.after.event_initialized["dapui_config"] = function()
-        dapui.open()
-      end
-      dap.listeners.before.event_terminated["dapui_config"] = function()
-        dapui.close()
-      end
-      dap.listeners.before.event_exited["dapui_config"] = function()
-        dapui.close()
-      end
-    end
-  },
-
-  {
-    "mfussenegger/nvim-dap",
-    config = function(_, opts)
-      map('n', '<Leader>bp', '<CMD>DapToggleBreakpoint<CR>', opts)
-    end
-  },
-
-  {
-    "mfussenegger/nvim-dap-python",
-    ft = "python",
-    dependencies = {
-      "mfussenegger/nvim-dap",
-      "rcarriga/nvim-dap-ui",
-    },
-    config = function(_, opts)
-      local path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python"
-      dap_python = require("dap-python")
-      dap_python.setup(path)
-      map('n', '<Leader>dpr', function() dap_python.test_method() end, opts)
-    end,
   },
 
   -- putting everything directly in this table instead
@@ -653,18 +405,6 @@ vim.cmd [[ autocmd ColorScheme * highlight ExtraWhitespace ctermbg=darkred guibg
 vim.cmd [[ match ExtraWhitespace /\s\+$/ ]]
 vim.cmd [[ autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/ ]]
 
--- toggle colorscheme
-function _toggleColorscheme()
-  if vim.g.colors_name == 'kanagawa' then
-    print("Switching to light theme...")
-    vim.cmd [[ colorscheme github_light_colorblind ]]
-  else
-    print("Switching to dark theme...")
-    vim.cmd [[ colorscheme kanagawa ]]
-  end
-end
-vim.api.nvim_create_user_command("ToggleColorscheme", _toggleColorscheme, {})
-map('n', '<Leader>00', '<Cmd>ToggleColorscheme<CR>', opts)
 map('n', '<leader>99', "<Cmd>Telescope colorscheme<CR>", { desc = 'Colorscheme with preview' })
 
 map('n', '<leader>ff', "<Cmd>lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>", default_opts) -- format file
@@ -752,12 +492,12 @@ require('nvim-treesitter.configs').setup {
     'sql',
     'c', 'cpp',
     'go',
-    'java',
+    -- 'java',
     'rust',
     'lua',
-    'ruby',
+    -- 'ruby',
     'bash',
-    'elixir',
+    -- 'elixir',
 
     -- Make words look pretty
     -- 'markdown', -- using vim-pandoc-syntax for this
@@ -914,11 +654,11 @@ local servers = {
   clangd = {},
   pyright = {},
   -- tsserver = {},
-  cssls = {},
+  -- cssls = {},
   gopls = {},
   rust_analyzer = {},
-  angularls = {},
-  elixirls = {},
+  -- angularls = {},
+  -- elixirls = {},
 
   -- lua_ls = {
   --   Lua = {
