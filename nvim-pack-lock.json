@@ -1,0 +1,41 @@
+{
+  "plugins": {
+    "blink.cmp": {
+      "rev": "b19413d214068f316c78978b08264ed1c41830ec",
+      "src": "https://github.com/saghen/blink.cmp",
+      "version": "1.0.0 - 2.0.0"
+    },
+    "fzf-lua": {
+      "rev": "578a11f9f7c5f4436b833731ccceeda9479562f0",
+      "src": "https://github.com/ibhagwan/fzf-lua"
+    },
+    "gitsigns.nvim": {
+      "rev": "42d6aed4e94e0f0bbced16bbdcc42f57673bd75e",
+      "src": "https://github.com/lewis6991/gitsigns.nvim"
+    },
+    "mason.nvim": {
+      "rev": "44d1e90e1f66e077268191e3ee9d2ac97cc18e65",
+      "src": "https://github.com/mason-org/mason.nvim"
+    },
+    "nightfox.nvim": {
+      "rev": "ba47d4b4c5ec308718641ba7402c143836f35aa9",
+      "src": "https://github.com/EdenEast/nightfox.nvim"
+    },
+    "nvim-autopairs": {
+      "rev": "c2a0dd0d931d0fb07665e1fedb1ea688da3b80b4",
+      "src": "https://github.com/windwp/nvim-autopairs"
+    },
+    "nvim-surround": {
+      "rev": "1098d7b3c34adcfa7feb3289ee434529abd4afd1",
+      "src": "https://github.com/kylechui/nvim-surround"
+    },
+    "tmux.nvim": {
+      "rev": "2c1c3be0ef287073cef963f2aefa31a15c8b9cd8",
+      "src": "https://github.com/aserowy/tmux.nvim"
+    },
+    "vim-fugitive": {
+      "rev": "61b51c09b7c9ce04e821f6cf76ea4f6f903e3cf4",
+      "src": "https://github.com/tpope/vim-fugitive"
+    }
+  }
+}
