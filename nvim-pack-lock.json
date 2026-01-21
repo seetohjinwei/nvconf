@@ -29,6 +29,14 @@
       "rev": "1098d7b3c34adcfa7feb3289ee434529abd4afd1",
       "src": "https://github.com/kylechui/nvim-surround"
     },
+    "oil-git.nvim": {
+      "rev": "d1f27a5982df35b70fb842aa6bbfac10735c7265",
+      "src": "https://github.com/benomahony/oil-git.nvim"
+    },
+    "oil.nvim": {
+      "rev": "f55b25e493a7df76371cfadd0ded5004cb9cd48a",
+      "src": "https://github.com/stevearc/oil.nvim"
+    },
     "tmux.nvim": {
       "rev": "2c1c3be0ef287073cef963f2aefa31a15c8b9cd8",
       "src": "https://github.com/aserowy/tmux.nvim"

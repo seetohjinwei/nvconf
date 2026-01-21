@@ -11,7 +11,7 @@ keymap('n', '<Leader>ty', ':split<CR>')
 keymap('n', '<Leader>tw', ':close<CR>')
 
 -- netrw
-keymap('n', '<Leader>e', ':Explore<CR>')
+keymap('n', '<Leader>e', ':Oil<CR>')
 
 -- Fast insertion of leader key
 keymap('i', ';\'', ';')
