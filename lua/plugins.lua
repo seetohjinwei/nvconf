@@ -97,6 +97,8 @@ require("oil").setup({
   },
 })
 
+-- BUG: This doesn't show ignored status for files in ignored directories
+-- because of the git commmand (`git status --porcelain --ignored`) used.
 vim.pack.add({
     { src = "https://github.com/benomahony/oil-git.nvim" },
 })
