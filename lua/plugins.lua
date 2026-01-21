@@ -64,6 +64,8 @@ vim.pack.add({
 })
 require('nvim-surround').setup()
 
+require('plugins.focus')
+
 -- LSP
 
 vim.pack.add({

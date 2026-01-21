@@ -42,6 +42,7 @@ keymap('n', '<leader>rn', vim.lsp.buf.rename)
 keymap('n', '<leader>.', vim.lsp.buf.code_action)
 
 keymap('n', 'gd', vim.lsp.buf.definition)
+keymap('n', 'gr', '<Cmd>FzfLua lsp_references<CR>')
 
 -- Plugins
 
@@ -51,3 +52,6 @@ keymap('n', '<leader>sf', '<Cmd>FzfLua files<CR>')
 keymap('n', '<leader>sg', '<Cmd>FzfLua live_grep<CR>')
 
 keymap('n', '<leader>gs', '<Cmd>Git<CR>')
+
+-- Focus pane (similar to tmux)
+keymap('n', '<C-w>m', '<Cmd>FocusPaneToggle<CR>')
