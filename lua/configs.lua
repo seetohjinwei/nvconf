@@ -31,8 +31,11 @@ vim.opt.timeoutlen = 300
 
 vim.opt.winborder = "rounded" -- Use rounded borders for windows
 
+vim.opt.showmode = false  -- Custom statusline already shows the mode
+
 -- netrw (file explorer)
 -- https://vonheikemen.github.io/devlog/tools/using-netrw-vim-builtin-file-explorer/
+-- NOTE: This is unused because of oil.nvim
 
 vim.g.netrw_banner = 0 -- Disable the banner
 vim.g.netrw_liststyle = 3
