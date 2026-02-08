@@ -1,5 +1,7 @@
 # Jin Wei's neovim config
 
+Configured to work best with [my tmux config](https://github.com/seetohjinwei/tmuxconf).
+
 Adapted from [this blog post by vieitesss](https://vieitesss.github.io/posts/Neovim-new-config/) and [my old config](https://github.com/seetohjinwei/nvconf/tree/52218bb2a5775db7faf3d380cc06eb7abcbfd9f4).
 
 ## Installation
@@ -20,4 +22,10 @@ git clone https://github.com/seetohjinwei/nvconf.git ~/.config/nvim
 
 # Opening neovim installs everything else!
 nvim
+```
+
+```sh
+# neat aliases
+alias nv="nvim"
+alias nvconf="cd ~/.config/nvim && nvim . && cd -"
 ```
