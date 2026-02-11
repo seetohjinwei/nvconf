@@ -105,6 +105,7 @@ vim.pack.add({
 require('oil-git').setup()
 
 require('plugins.focus')
+require('plugins.scratch')
 
 -- LSP
 

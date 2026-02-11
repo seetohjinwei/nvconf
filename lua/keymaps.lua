@@ -1,7 +1,7 @@
 -- Keybindings
 
 local function keymap(modes, lhs, rhs, opts)
-    opts = opts or { noremap=true, silent=true }
+    opts = opts or { noremap = true, silent = true }
     vim.keymap.set(modes, lhs, rhs, opts)
 end
 
@@ -53,5 +53,6 @@ keymap('n', '<leader>sg', '<Cmd>FzfLua live_grep<CR>')
 
 keymap('n', '<leader>gs', '<Cmd>Git<CR>')
 
+keymap('n', '<leader>q', '<Cmd>ScratchToggle<CR>')
 -- Focus pane (similar to tmux)
 keymap('n', '<C-w>m', '<Cmd>FocusPaneToggle<CR>')
