@@ -46,6 +46,8 @@ keymap('n', 'gr', '<Cmd>FzfLua lsp_references<CR>')
 
 -- Plugins
 
+keymap('n', '<leader>u', require("undotree").open)
+
 keymap('n', '<leader>ps', '<cmd>lua vim.pack.update()<CR>')
 
 keymap('n', '<leader>sf', '<Cmd>FzfLua files<CR>')

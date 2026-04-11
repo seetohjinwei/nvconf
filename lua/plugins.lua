@@ -54,6 +54,8 @@ require('tmux').setup(
 
 -- Editing
 
+vim.cmd("packadd nvim.undotree")
+
 vim.pack.add({
     { src = "https://github.com/windwp/nvim-autopairs" },
 })

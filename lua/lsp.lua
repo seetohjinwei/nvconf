@@ -6,6 +6,7 @@ vim.lsp.enable({
   "bashls",
   "gopls",
   "lua_ls",
+  "pyright",
   "rust-analyzer",
 })
 vim.diagnostic.config({ virtual_text = true })
